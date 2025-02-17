@@ -13,7 +13,10 @@ ser = serial.Serial('/dev/serial0', 115200, timeout=1)
 
 def read_ibus():
     while True:
-        if ser.in_waiting >= 32:  # iBUS-bericht heeft 32 bytes
+        # ser.reset_input_buffer()
+
+        # if ser.in_waiting >= 32:
+        if ser.in_waiting >= 32:
             data = ser.read(32)
             if data[0] == 0x20 and data[1] == 0x40:  # iBUS-header check
                 channels = struct.unpack('<14H', data[2:30])  # 14 kanalen
@@ -25,7 +28,7 @@ def read_ibus():
                 else:
                     led.off()
 
-        sleep(0.05)  # Vermijd overbelasting van CPU
+        sleep(0.001)  # Vermijd overbelasting van CPU
 
 try:
     read_ibus()
