@@ -16,7 +16,7 @@ THRESHOLD_ON = 1502
 THRESHOLD_OFF = 1498  
 
 
-ser = serial.Serial("/dev/serial2", 115200, timeout=1)
+ser = serial.Serial("/dev/serial0", 115200, timeout=1)
 
 
 def control_leds(channel_values):
