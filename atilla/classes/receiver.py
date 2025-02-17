@@ -1,10 +1,15 @@
 from led import Led
 import serial
 import struct
+import time
 
 class IBus: 
 
-    def __init__(self, url="/dev/serial0", baudrate=115200, timeout=0.1):
+    # ###
+    # baudrate: standaard voor I-Bus
+    # timeout: Na hoeveel seconden hij verbinding verbreekt 
+    # ###
+    def __init__(self, url="/dev/serial0", baudrate=115200, timeout=1):
         self.url = url
         self.baudrate = baudrate
         self.timeout = timeout
@@ -32,11 +37,13 @@ class IBus:
                     if data[0] == 0x20 and data[1] == 0x40 and len(data) == 32:
                         channels = struct.unpack("<14H", data[2:30])
                         print(f"Channels: {channels}")
-
+                        self.led.zetLedAan(channels)
+                    
                     else:
                         print("Ongeldige iBUS data ontvangen of verkeerde lengte")
-                    self.led.zetLedAan(channels)
-                self.serial.timeout = 0.01
+
+                # Zeer belangrijk om CPU te ontlasten!!!
+                time.sleep(0.001)
 
             except Exception as e:
                 print(f"Fout tijdens uitlezen van iBUS data: {e}")
