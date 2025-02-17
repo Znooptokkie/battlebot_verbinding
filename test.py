@@ -4,12 +4,12 @@ import struct
 from time import sleep
 
 # GPIO-instellingen
-LED_PIN = 18
+LED_PIN = 27
 led = LED(LED_PIN)
 THRESHOLD = 1500
 
 # Seriële poort openen
-ser = serial.Serial('/dev/serial0', 115200, timeout=1)
+ser = serial.Serial('/dev/serial2', 115200, timeout=1)
 
 def read_ibus():
     while True:
