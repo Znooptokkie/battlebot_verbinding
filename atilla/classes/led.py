@@ -1,5 +1,4 @@
 from gpiozero import LED
-from time import sleep
 
 class Led:
     def __init__(self, gpio_led_pin=27):
@@ -10,18 +9,17 @@ class Led:
     def zetLedAan(self, channels):
         try:
             if channels and len(channels) > 4:
-                print(f"{channels[1]}")
+                # print(f"{channels[1]}")
                 if channels[1] > self.threshold:
                     self.led.on()
-                    print("LED is AAN")
+                    # print("LED is AAN")
 
                 else:
                     self.led.off()
-                    print("LED is UIT!")
+                    # print("LED is UIT!")
 
         except Exception as e:
             print(f"Fout bij het schakelen van de LED: {e}")
 
 if __name__ == "__main__":
      pass
-
