@@ -1,4 +1,5 @@
 from test_led import Led
+from test_control import Control
 import serial
 import struct
 import time
@@ -36,7 +37,8 @@ class ReceiverInit:
 class ReceiverData:
     serial_init = ReceiverInit()
     serial = serial_init.getSerialConnection()                             
-    led = Led()
+    # led = Led()
+    control = Control()
 
     @classmethod
     def readData(cls):
@@ -54,10 +56,11 @@ class ReceiverData:
                 if data[0] == 0x20 and data[1] == 0x40 and len(data) == 32:
 
                     channels = struct.unpack("<14H", data[2:30])
+                    # print(f"Channels: {channels}")
+                    # print(f"\033[91mCH1: {channels[0]}\033[0m, \033[94mCH2: {channels[1]}\033[0m")
 
-                    print(f"\033[91mCH1: {channels[0]}\033[0m, \033[94mCH2: {channels[1]}\033[0m")
-
-                    cls.led.zetLedAan(channels)
+                    # cls.led.zetLedAan(channels)
+                    cls.control.run(channels)
                 else:
                     print("Ongeldige iBUS data ontvangen of verkeerde lengte")
                     cls.serial.reset_input_buffer()

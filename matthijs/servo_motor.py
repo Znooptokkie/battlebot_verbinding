@@ -6,7 +6,7 @@ class ServoMotor:
     threshold_off = 1498
 
     @staticmethod
-    def control_servo(channel_values):
+    def controlServo(channel_values):
         servo = Servo(ServoMotor.pin_servo)
         value = channel_values[3]
 

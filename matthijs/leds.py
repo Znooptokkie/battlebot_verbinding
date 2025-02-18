@@ -7,16 +7,20 @@ class Leds:
     threshold_off = 1498
 
     @classmethod
-    def setup_leds(cls):
+    def setupLeds(cls):
         for pin in cls.pin_leds:
+            print(f"leds {pin}")
             cls.leds[pin] = LED(pin)
     
-    @staticmethod
-    def control_leds(channel_values):
-        for key, pin in enumerate(Leds.pin_leds):
-            led = Leds.leds[pin]
+    @classmethod
+    def controlLeds(cls, channel_values):
+        cls.setupLeds()
+        for key, pin in enumerate(cls.pin_leds):
+            led = cls.leds[pin]
             value = channel_values[key]
-            if value > Leds.threshold_on:
+            # print(f"leds {cls.leds}")
+            if value > cls.threshold_on:
                 led.on()
-            elif value < Leds.threshold_off:
+                # print(value)
+            elif value < cls.threshold_off:
                 led.off()
